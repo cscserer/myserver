@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        div.gallery {
+            margin: 5px;
+            border: 1px solid #ccc;
+            float: left;
+            width: 400px;
+        }
+
+        div.nev {
+            float: left;
+            position: sticky;
+            top:0;
+            padding: 5px;
+        }
+
+        div.detail{
+            float:left;
+        }
+        div.cascade {
+            float: left;
+            width: 400px
+        }
+
+        div.method {
+        }
+
+        div.legend {
+            position: sticky;
+            top:0;
+            background:#FFFFFF;
+            padding: 5px;
+            border: 2px solid #000000;
+        }
+
+    </style>
+</head>
+
+<header>
+    <h2> First Web Demo -- 299 objects </h2>
+</header>
+<body>
+<div>
+    <div class="nev">
+        <form action="{% url 'projects:first' %}" method="post">
+            {% csrf_token %}
+            <ul>
+                Models
+                {% for text, num in category.items %}
+                <li><input type="checkbox" name="category" value="{{text}}"
+                           {% if text in q.category %}
+                           checked="checked"
+                           {%endif%}> {{text}}
+                </li>
+                {% endfor %}
+            </ul>
+            {{message1}}
+
+            <ul>
+                Features
+                {% for text in feature%}
+                <li><input type="checkbox" name="feature" value="{{text}}"
+                           {% if text in q.feature %}
+                           checked="checked"
+                           {%endif%}> {{text}}
+                </li>
+                {% endfor %}
+            </ul>
+            {{message2}}
+            <input type="submit" value="submit">
+        </form>
+    </div>
+    <div class="detail">
+        <div class="legend">
+            {% for text, color in color.items %}
+            {% if text in q.category %}
+            <svg height="6" width="6">
+                <circle r="3" cx="{{3}}" cy="{{3}}" fill="{{color}}"></circle>
+            </svg>
+            {{text}}
+
+
+            {%endif%}
+            {% endfor %}
+        </div>
+        <div class="cascade">
+            <div class="method">
+                <h2> UMAP </h2>
+            </div>
+            {% for pic in pictures%}
+            {% if pic.title_method == "UMAP" %}
+
+            <p>{{pic.title_features}}</p>
+            <p>{{pic.title_nh}}</p>
+            <div class="gallery">
+                <svg height="{{pic.height}}" width="{{pic.width}}">
+                    {% for x, y, c, nhc in pic.point %}
+                    <circle r="3" cx="{{x}}" cy="{{y}}" fill="{{c}}"></circle>
+                    {% endfor %}
+                </svg>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="cascade">
+            <div class="method">
+                <h2> UMAP_NH </h2>
+            </div>
+            {% for pic in pictures%}
+            {% if pic.title_method == "UMAP" %}
+
+            <p>{{pic.title_features}}</p>
+            <p>{{pic.title_nh}}</p>
+            <div class="gallery">
+                <svg height="{{pic.height}}" width="{{pic.width}}">
+                    {% for x, y, c, nhc in pic.point %}
+                    <circle r="3" cx="{{x}}" cy="{{y}}" fill="{{nhc}}"></circle>
+                    {% endfor %}
+                </svg>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="cascade">
+            <div class="method">
+                <h2> TSNE </h2>
+            </div>
+            {% for pic in pictures%}
+            {% if pic.title_method == "TSNE" %}
+
+            <p>{{pic.title_features}}</p>
+            <p>{{pic.title_nh}}</p>
+            <div class="gallery">
+                <svg height="{{pic.height}}" width="{{pic.width}}">
+                    {% for x, y, c, nhc in pic.point %}
+                    <circle r="3" cx="{{x}}" cy="{{y}}" fill="{{c}}"></circle>
+                    {% endfor %}
+                </svg>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="cascade">
+            <div class="method">
+                <h2> TSNE_NH </h2>
+            </div>
+            {% for pic in pictures%}
+            {% if pic.title_method == "TSNE" %}
+
+            <p>{{pic.title_features}}</p>
+            <p>{{pic.title_nh}}</p>
+            <div class="gallery">
+                <svg height="{{pic.height}}" width="{{pic.width}}">
+                    {% for x, y, c, nhc in pic.point %}
+                    <circle r="3" cx="{{x}}" cy="{{y}}" fill="{{nhc}}"></circle>
+                    {% endfor %}
+                </svg>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</body>
